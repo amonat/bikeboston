@@ -1,2 +1,2 @@
-require './hello'
+require './map'
 run Sinatra::Application
