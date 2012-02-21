@@ -10,6 +10,7 @@
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXTd7O08ocftNQ_phwWOE57lZytjVlxxU&sensor=true">
     </script>
+    <script type="text/javascript" src="/js/jquery-1.7.1.js"></script>
     <script type="text/javascript">
       function initialize() {
         var myOptions = {
@@ -33,6 +34,23 @@
 
         google.maps.event.addListener(marker, 'click', function() {
           infowindow.open(map,marker);
+        });
+
+        $.get('/bikedata').done(function(data) {
+          var stations = $.parseXML(data);
+          $(stations).find('station').each(function(i, station) {
+              var $station = $(station);
+              var name = $station.find('name').text();
+              var lat = $station.find('lat').text();
+              var lng = $station.find('long').text();
+              var latLng = new google.maps.LatLng(lat, lng);
+              var marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+                title: name
+              });
+              var visible = marker.getVisible();
+          });
         });
 
       }
