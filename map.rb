@@ -16,6 +16,10 @@ get '/' do
 	erb :map2
 end
 
-get '/bikedata' do
-	xmlDoc('www.capitalbikeshare.com/stations/bikeStations.xml')
+get '/bikedata-dc' do
+	xmlDoc('http://www.capitalbikeshare.com/stations/bikeStations.xml')
+end
+
+get '/bikedata-boston' do
+	xmlDoc('http://www.thehubway.com/data/stations/bikeStations.xml')
 end

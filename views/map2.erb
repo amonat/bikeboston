@@ -14,42 +14,39 @@
     <script type="text/javascript">
       function initialize() {
         var myOptions = {
-          center: new google.maps.LatLng(42.3, -71.02),
-          zoom: 8,
+          center: new google.maps.LatLng(42.350851, -71.089886),
+          zoom: 13,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         var map = new google.maps.Map(document.getElementById("map_canvas"),
             myOptions);
 
-        var markerLatLng = new google.maps.LatLng(42.3, -71.02);
-        var marker = new google.maps.Marker({
-          position: markerLatLng,
-          map: map,
-          title: "Andy's Marker"
-        });
-
         var infowindow = new google.maps.InfoWindow({
-            content: "here's the place!"
+            content: ""
         });
 
-        google.maps.event.addListener(marker, 'click', function() {
-          infowindow.open(map,marker);
-        });
-
-        $.get('/bikedata').done(function(data) {
+        $.get('/bikedata-boston').done(function(data) {
           var stations = $.parseXML(data);
           $(stations).find('station').each(function(i, station) {
               var $station = $(station);
-              var name = $station.find('name').text();
-              var lat = $station.find('lat').text();
-              var lng = $station.find('long').text();
+              var name = $station.children('name').text();
+              var lat = $station.children('lat').text();
+              var lng = $station.children('long').text();
+              var numBikes = $station.children('nbbikes').text();
+              var numEmpty = $station.children('nbemptydocks').text();
               var latLng = new google.maps.LatLng(lat, lng);
               var marker = new google.maps.Marker({
                 position: latLng,
                 map: map,
                 title: name
               });
-              var visible = marker.getVisible();
+
+              google.maps.event.addListener(marker, 'click', function() {
+                infowindow.setContent(name + "<div>" + numBikes + " bikes</div><div>" + numEmpty + " empty docks</div>");
+                infowindow.open(map,marker);
+              });
+
+
           });
         });
 
