@@ -12,6 +12,12 @@
     </script>
     <script type="text/javascript" src="/js/jquery-1.7.1.js"></script>
     <script type="text/javascript">
+      var stops = [
+        <% for s in @stops %>
+        {name: '<%=s[:name]%>', lat: <%=s[:lat]%>, lon: <%=s[:lon]%>, line1: '<%=s[:line1]%>', stop1: '<%=s[:stop1]%>', line2: '<%=s[:line2]%>', stop2: '<%=s[:stop2]%>'},
+        <% end %>
+      ];
+
       function initialize() {
         var myOptions = {
           center: new google.maps.LatLng(42.350851, -71.089886),
@@ -25,6 +31,22 @@
             content: ""
         });
 
+        $.each(stops, function(i, s) {
+          var latLng = new google.maps.LatLng(s.lat, s.lon);
+          var marker = new google.maps.Marker({
+            position: latLng,
+            map: map,
+            title: s.name,
+            icon: 'http://www.google.com/mapfiles/arrow.png'
+          });
+
+          google.maps.event.addListener(marker, 'click', function() {
+            infowindow.setContent(name + "<div>" + s.name + "</div>");
+            infowindow.open(map,marker);
+          });
+
+        });
+
         $.get('/bikedata-boston').done(function(data) {
           var stations = $.parseXML(data);
           $(stations).find('station').each(function(i, station) {
@@ -34,7 +56,7 @@
               var lng = $station.children('long').text();
               var numBikes = $station.children('nbbikes').text();
               var numEmpty = $station.children('nbemptydocks').text();
-              var latLng = new google.maps.LatLng(lat, lng);
+              var latLng = new google.maps.LatLng(lat, lng);          
               var marker = new google.maps.Marker({
                 position: latLng,
                 map: map,
