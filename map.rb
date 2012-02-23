@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'rest_client'
-require 'JSON'
+require 'json'
 
 helpers do
   def xmlDoc(url)
