@@ -6,7 +6,7 @@
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
-      #map_canvas { height: 1000px; width: 400px; }
+      #map_canvas { width: 800px; height: 600px; }
     </style>
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXTd7O08ocftNQ_phwWOE57lZytjVlxxU&sensor=true">
@@ -18,6 +18,19 @@
         {name: '<%=s[:name]%>', lat: <%=s[:lat]%>, lon: <%=s[:lon]%>, line1: '<%=s[:line1]%>', stop1: '<%=s[:stop1]%>', line2: '<%=s[:line2]%>', stop2: '<%=s[:stop2]%>'},
         <% end %>
       ];
+
+      var detectBrowser = function() {
+        var useragent = navigator.userAgent;
+        var mapdiv = document.getElementById("map_canvas");
+
+        if (useragent.indexOf('iPhone') != -1 || useragent.indexOf('Android') != -1 ) {
+          mapdiv.style.width = '100%';
+          mapdiv.style.height = '100%';
+        } else {
+          mapdiv.style.width = '800px';
+          mapdiv.style.height = '600px';
+        }
+      }
 
       var trainTimesString = function(times) {
         var result = '';
@@ -136,6 +149,6 @@
     </script>
   </head>
   <body onload="initialize()">
-    <div id="map_canvas" style="width:1000px; height:400px"></div>
+    <div id="map_canvas"></div>
   </body>
 </html>
