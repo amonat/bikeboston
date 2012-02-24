@@ -67,7 +67,10 @@
         var bounds = map.getBounds();
         for (var i = 0; i < markers.length; i++) {
           var visible = bounds.contains(markers[i].getPosition());
-          markers[i].setMap(visible ? map : null);
+          var desiredMap = visible ? map : null;
+          if (desiredMap !== markers[i].getMap()) {
+            markers[i].setMap(desiredMap);
+          }
         }
       };
 
