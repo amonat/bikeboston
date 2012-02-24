@@ -47,14 +47,28 @@
         return $v.html();
       };
 
+      // A collection of all the markers on the screen
+      var markers = [];
+
+      var showMarkers = function(map) {
+        var bounds = map.getBounds();
+        for (var i = 0; i < markers.length; i++) {
+          var visible = bounds.contains(markers[i].getPosition());
+          markers[i].setMap(visible ? map : null);
+        }
+      };
+
       var initialize = function() {
         var myOptions = {
-          center: new google.maps.LatLng(42.350851, -71.089886),
-          zoom: 13,
+          center: new google.maps.LatLng(42.35639457,-71.0624242),
+          zoom: 15,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         var map = new google.maps.Map(document.getElementById("map_canvas"),
             myOptions);
+        google.maps.event.addListener(map, 'idle', function() {
+          showMarkers(map);
+        });
 
         var infowindow = new google.maps.InfoWindow({
             content: ""
@@ -70,6 +84,7 @@
             title: s.name,
             icon: 'http://www.google.com/mapfiles/arrow.png'
           });
+          markers.push(marker);
 
           google.maps.event.addListener(marker, 'click', function() {
             if (s.line1 && s.stop1) {
@@ -106,6 +121,7 @@
                 map: map,
                 title: name
               });
+              markers.push(marker);
 
               google.maps.event.addListener(marker, 'click', function() {
                 infowindow.setContent(name + "<div>" + numBikes + " bikes</div><div>" + numEmpty + " empty docks</div>");
