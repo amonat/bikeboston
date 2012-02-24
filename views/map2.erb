@@ -96,7 +96,7 @@
           var latLng = new google.maps.LatLng(s.lat, s.lon);
           var marker = new google.maps.Marker({
             position: latLng,
-            map: map,
+            map: null,
             title: s.name,
             icon: 'http://www.google.com/mapfiles/arrow.png'
           });
@@ -134,7 +134,7 @@
               var latLng = new google.maps.LatLng(lat, lng);          
               var marker = new google.maps.Marker({
                 position: latLng,
-                map: map,
+                map: null,
                 title: name
               });
               markers.push(marker);
