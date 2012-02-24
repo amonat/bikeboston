@@ -18,18 +18,31 @@
         <% end %>
       ];
 
+      var appendTrainTimes = function($v, times) {
+        for (var i = 0; i < times.length; i++) {
+          $v.append(times[i]);
+          if (i < times.length - 1) {
+            $v.append(", ");
+          }
+        }
+      };
+
       var makeStopInfo = function(s, result1, result2) {
         var data1 = result1[0];
         var data2 = result2 ? result2[0] : null;
-        var $i = $("<div>").append("<h3>" + s.name);
-        $i.append("<h4>" + data1.direction1);
-        $i.append("<h4>" + data1.direction2);
+        var $v = $("<div>").append("<h3>" + s.name);
+        $v.append("<h4>" + data1.direction1 + ":");
+        appendTrainTimes($v, data1.times1);
+        $v.append("<h4>" + data1.direction2 + ":");
+        appendTrainTimes($v, data1.times2);
         if (data2) {
-          $i.append("<h4>" + data2.direction1);
-          $i.append("<h4>" + data2.direction2);
+          $v.append("<h4>" + data2.direction1 + ":");
+          appendTrainTimes($v, data1.times1);
+          $v.append("<h4>" + data2.direction2 + ":");
+          appendTrainTimes($v, data1.times2);
         }
 
-        return $i.html();
+        return $v.html();
       };
 
       var initialize = function() {
