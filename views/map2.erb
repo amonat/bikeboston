@@ -140,7 +140,7 @@
               markers.push(marker);
 
               google.maps.event.addListener(marker, 'click', function() {
-                infowindow.setContent(name + "<div>" + numBikes + " bikes</div><div>" + numEmpty + " empty docks</div>");
+                infowindow.setContent("<strong>" + name + "</strong><div><em>" + numBikes + " bikes</em></div><div><em>" + numEmpty + " empty docks</em></div>");
                 infowindow.open(map,marker);
               });
 
