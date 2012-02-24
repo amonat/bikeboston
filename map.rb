@@ -14,10 +14,6 @@ helpers do
 
   @@timeRegexp = /(-?)(\d\d):(\d\d):(\d\d)/
 
-  def pluralize(number, noun)
-    number == 1 ? noun : noun + "s"
-  end
-  
   # Get the time in seconds from a string like hh:mm:ss.
   def getTimeSeconds(timeStr)
     m = @@timeRegexp.match(timeStr)
@@ -34,12 +30,12 @@ helpers do
   # and turned into a friendly string.
   def getMinutesString(timeStr)
     minutes = getTimeMinutes(timeStr)
-    minutes < 1 ? "Arriving" : minutes.to_s + pluralize(minutes, " minute")
+    minutes < 1 ? "Arriving" : minutes.to_s + " min."
   end
 
   def getMinutesStringFromSeconds(seconds)
     minutes = seconds / 60
-    minutes < 1 ? "Arriving" : minutes.to_s + pluralize(minutes, " minute")
+    minutes < 1 ? "Arriving" : minutes.to_s + " min."
   end
 
   # Get the predicted train times for a platform given the list of trains for a route.
