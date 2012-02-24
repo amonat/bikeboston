@@ -18,7 +18,21 @@
         <% end %>
       ];
 
-      function initialize() {
+      var makeStopInfo = function(s, result1, result2) {
+        var data1 = result1[0];
+        var data2 = result2 ? result2[0] : null;
+        var $i = $("<div>").append("<h3>" + s.name);
+        $i.append("<h4>" + data1.direction1);
+        $i.append("<h4>" + data1.direction2);
+        if (data2) {
+          $i.append("<h4>" + data2.direction1);
+          $i.append("<h4>" + data2.direction2);
+        }
+
+        return $i.html();
+      };
+
+      var initialize = function() {
         var myOptions = {
           center: new google.maps.LatLng(42.350851, -71.089886),
           zoom: 13,
@@ -31,6 +45,8 @@
             content: ""
         });
 
+        var request = null;
+
         $.each(stops, function(i, s) {
           var latLng = new google.maps.LatLng(s.lat, s.lon);
           var marker = new google.maps.Marker({
@@ -41,8 +57,24 @@
           });
 
           google.maps.event.addListener(marker, 'click', function() {
-            infowindow.setContent(name + "<div>" + s.name + "</div>");
+            if (s.line1 && s.stop1) {
+              infowindow.setContent("<h3>" + s.name + "</h3>Loading...");
+            } else {
+              infowindow.setContent("<h3>" + s.name + "</h3>"); 
+            }
+
             infowindow.open(map,marker);
+
+            if (s.line1 && s.stop1) {
+              request1 = $.getJSON('/stopinfo?line=' + s.line1 + '&stop=' + s.stop1);
+              request2 = (s.line2 && s.stop2) ? $.getJSON('/stopinfo?line=' + s.line2 + '&stop=' + s.stop2) : $.Deferred().resolve();
+              $.when(request1, request2).then(function(result1, result2) {
+                console.log('1:', result1);
+                console.log('2:', result2);
+                infowindow.setContent(makeStopInfo(s, result1, result2));
+                //infowindow.setContent(name + "<div>" + s.name + "</div>" + "<div>" + data.direction1 + "</div>" + "<div>" + data.direction2 + "</div>");
+              });
+            }
           });
 
         });

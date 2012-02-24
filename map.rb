@@ -149,12 +149,12 @@ get '/stopinfo' do
     d2 = 'Alewife'
     t1 = predictedTrainTimes(trains, stop + "S")
     t2 = predictedTrainTimes(trains, stop + "N")
-  when 'blue'
+  when 'orange'
     d1 = 'Forest Hills'
     d2 = 'Oak Grove'
     t1 = predictedTrainTimes(trains, stop + "S")
     t2 = predictedTrainTimes(trains, stop + "N")
-  when 'orange'
+  when 'blue'
     d1 = 'Wonderland'
     d2 = 'Bowdoin'
     t1 = predictedTrainTimes(trains, stop + "E")
