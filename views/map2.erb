@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>Boston Subway & Hubway Tracker</title>
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
@@ -18,28 +19,29 @@
         <% end %>
       ];
 
-      var appendTrainTimes = function($v, times) {
+      var trainTimesString = function(times) {
+        var result = '';
         for (var i = 0; i < times.length; i++) {
-          $v.append(times[i]);
+          result += times[i];
           if (i < times.length - 1) {
-            $v.append(", ");
+            result += ", ";
           }
         }
+        if (times.length === 0) {
+          result += "No trains";
+        }
+        return result;
       };
 
       var makeStopInfo = function(s, result1, result2) {
         var data1 = result1[0];
         var data2 = result2 ? result2[0] : null;
-        var $v = $("<div>").append("<h3>" + s.name);
-        $v.append("<h4>" + data1.direction1 + ":");
-        appendTrainTimes($v, data1.times1);
-        $v.append("<h4>" + data1.direction2 + ":");
-        appendTrainTimes($v, data1.times2);
+        var $v = $("<div>").append("<strong>" + s.name);
+        $v.append("<div><em>" + data1.direction1 + ": " + trainTimesString(data1.times1));
+        $v.append("<div><em>" + data1.direction2 + ": " + trainTimesString(data1.times2));
         if (data2) {
-          $v.append("<h4>" + data2.direction1 + ":");
-          appendTrainTimes($v, data1.times1);
-          $v.append("<h4>" + data2.direction2 + ":");
-          appendTrainTimes($v, data1.times2);
+          $v.append("<div><em>" + data2.direction1 + ": " + trainTimesString(data2.times1));
+          $v.append("<div><em>" + data2.direction2 + ": " + trainTimesString(data2.times2));
         }
 
         return $v.html();
@@ -71,7 +73,7 @@
 
           google.maps.event.addListener(marker, 'click', function() {
             if (s.line1 && s.stop1) {
-              infowindow.setContent("<h3>" + s.name + "</h3>Loading...");
+              infowindow.setContent("<div><strong>" + s.name + "</div></strong>Loading...");
             } else {
               infowindow.setContent("<h3>" + s.name + "</h3>"); 
             }
@@ -82,10 +84,7 @@
               request1 = $.getJSON('/stopinfo?line=' + s.line1 + '&stop=' + s.stop1);
               request2 = (s.line2 && s.stop2) ? $.getJSON('/stopinfo?line=' + s.line2 + '&stop=' + s.stop2) : $.Deferred().resolve();
               $.when(request1, request2).then(function(result1, result2) {
-                console.log('1:', result1);
-                console.log('2:', result2);
                 infowindow.setContent(makeStopInfo(s, result1, result2));
-                //infowindow.setContent(name + "<div>" + s.name + "</div>" + "<div>" + data.direction1 + "</div>" + "<div>" + data.direction2 + "</div>");
               });
             }
           });
