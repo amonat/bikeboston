@@ -103,11 +103,11 @@
           markers.push(marker);
 
           google.maps.event.addListener(marker, 'click', function() {
+            var content = "<div><strong>" + s.name + "</div></strong>";
             if (s.line1 && s.stop1) {
-              infowindow.setContent("<div><strong>" + s.name + "</div></strong>Loading...");
-            } else {
-              infowindow.setContent("<h3>" + s.name + "</h3>"); 
+              content += "Loading...";
             }
+            infowindow.setContent(content); 
 
             infowindow.open(map,marker);
 
