@@ -19,16 +19,9 @@
         <% end %>
       ];
 
-      var detectBrowser = function() {
-        var useragent = navigator.userAgent;
-        var mapdiv = document.getElementById("map_canvas");
-
-        if (useragent.indexOf('iPhone') != -1 || useragent.indexOf('Android') != -1 ) {
-          mapdiv.style.width = '100%';
-          mapdiv.style.height = '100%';
-        } else {
-          mapdiv.style.width = '800px';
-          mapdiv.style.height = '600px';
+      var setFullSizeIfPhone = function() {
+        if (navigator.userAgent.indexOf('iPhone') != -1 || navigator.userAgent.indexOf('Android') != -1 ) {
+          $("#map_canvas").width('100%').height('100%');
         }
       }
 
@@ -75,6 +68,7 @@
       };
 
       var initialize = function() {
+        setFullSizeIfPhone();
         var myOptions = {
           center: new google.maps.LatLng(42.35639457,-71.0624242),
           zoom: 15,
