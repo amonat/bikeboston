@@ -125,11 +125,16 @@
               var lng = $station.children('long').text();
               var numBikes = $station.children('nbbikes').text();
               var numEmpty = $station.children('nbemptydocks').text();
-              var latLng = new google.maps.LatLng(lat, lng);          
+              var latLng = new google.maps.LatLng(lat, lng);
+              var icon = (Number(numBikes) > 0) ?
+                  'http://maps.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png' :
+                  'http://maps.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
+
               var marker = new google.maps.Marker({
                 position: latLng,
                 map: null,
-                title: name
+                title: name,
+                icon: icon
               });
               markers.push(marker);
 
