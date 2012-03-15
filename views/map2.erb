@@ -67,7 +67,7 @@
         }
       };
 
-      var initialize = function() {
+      $(function() {
         setFullSizeIfPhone();
         var myOptions = {
           center: new google.maps.LatLng(42.35639457,-71.0624242),
@@ -85,6 +85,14 @@
         });
 
         var request = null;
+
+        if (navigator && navigator.geolocation) {
+          var success = function(position) {
+            var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            map.setCenter(userLatLng);
+          };
+          navigator.geolocation.getCurrentPosition(success);
+        }
 
         $.each(stops, function(i, s) {
           var latLng = new google.maps.LatLng(s.lat, s.lon);
@@ -147,10 +155,10 @@
           showMarkers(map);
         });
 
-      }
+      });
     </script>
   </head>
-  <body onload="initialize()">
+  <body>
     <div id="map_canvas"></div>
   </body>
 </html>
