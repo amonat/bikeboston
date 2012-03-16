@@ -104,6 +104,10 @@ get '/' do
 	erb :map2
 end
 
+get '/about' do
+  erb :about
+end
+
 get '/bikedata-dc' do
 	xmlDoc('http://www.capitalbikeshare.com/stations/bikeStations.xml')
 end

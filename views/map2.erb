@@ -5,9 +5,12 @@
     <title>Boston Subway & Hubway Tracker</title>
     <style type="text/css">
       html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
+      body { height: 100%; margin: 0; padding: 0; font-family: 'Simonetta', cursive; }
       #map_canvas { width: 800px; height: 600px; }
+      .title { padding-left: 5px; }
+      .tagline { font-style: italic; font-size: 12px; }
     </style>
+    <link href='http://fonts.googleapis.com/css?family=Simonetta' rel='stylesheet' type='text/css'>
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXTd7O08ocftNQ_phwWOE57lZytjVlxxU&sensor=true">
     </script>
@@ -20,8 +23,8 @@
       ];
 
       var setFullSizeIfPhone = function() {
-        if (navigator.userAgent.indexOf('iPhone') != -1 || navigator.userAgent.indexOf('Android') != -1 ) {
-          $("#map_canvas").width('100%').height('100%');
+        if (navigator.userAgent.indexOf('iPhone') != -1 || navigator.userAgent.indexOf('Android') != -1 || true) {
+          $("#map_canvas").width('100%').height('90%');
         }
       }
 
@@ -159,6 +162,8 @@
     </script>
   </head>
   <body>
+    <div class="title">BostonBikeApp <span class="tagline">Live Hubway & MBTA Subway Map</span></div>
     <div id="map_canvas"></div>
+    <div class="footer"><a href="/about">About</a></div>
   </body>
 </html>
