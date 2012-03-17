@@ -7,6 +7,8 @@
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0; font-family: 'Simonetta', sans-serif; background-color: #eee; }
       #map_canvas { width: 800px; height: 600px; }
+      #infobox { display: none; position: relative; top: -50px; height: 70px; background-color: #EEE; width: 100%;
+        font-size: 12px; font-family: Arial, sans-serif; }
       .title { padding-left: 5px; }
       .tagline { font-style: italic; font-size: 12px; }
     </style>
@@ -73,6 +75,18 @@
         }
       };
 
+      var showInfoBox = function() {
+        $("#infobox").show('fast');
+      };
+
+      var hideInfoBox = function() {
+        $("#infobox").hide('fast');
+      };
+
+      var setInfoBoxContent = function(content) {
+        $("#infoboxcontent").html(content);
+      };
+
       $(function() {
         setFullSizeIfPhone();
         var myOptions = {
@@ -84,10 +98,6 @@
             myOptions);
         google.maps.event.addListener(map, 'idle', function() {
           showMarkers(map);
-        });
-
-        var infowindow = new google.maps.InfoWindow({
-            content: ""
         });
 
         var request = null;
@@ -115,15 +125,14 @@
             if (s.line1 && s.stop1) {
               content += "Loading...";
             }
-            infowindow.setContent(content); 
-
-            infowindow.open(map,marker);
+            setInfoBoxContent(content);
+            showInfoBox();
 
             if (s.line1 && s.stop1) {
               request1 = $.getJSON('/stopinfo?line=' + s.line1 + '&stop=' + s.stop1);
               request2 = (s.line2 && s.stop2) ? $.getJSON('/stopinfo?line=' + s.line2 + '&stop=' + s.stop2) : $.Deferred().resolve();
               $.when(request1, request2).then(function(result1, result2) {
-                infowindow.setContent(makeStopInfo(s, result1, result2));
+                  setInfoBoxContent(makeStopInfo(s, result1, result2));
               });
             }
           });
@@ -153,8 +162,8 @@
               markers.push(marker);
 
               google.maps.event.addListener(marker, 'click', function() {
-                infowindow.setContent("<strong>" + name + "</strong><div><em>" + numBikes + " bikes</em></div><div><em>" + numEmpty + " empty docks</em></div>");
-                infowindow.open(map,marker);
+                setInfoBoxContent("<strong>" + name + "</strong><div><em>" + numBikes + " bikes</em></div><div><em>" + numEmpty + " empty docks</em></div>");
+                showInfoBox();
               });
           });
 
@@ -167,6 +176,7 @@
   <body>
     <div class="title">Boston Bike App <span class="tagline">Live Hubway & MBTA Subway Map</span></div>
     <div id="map_canvas"></div>
+    <div id="infobox"><div id="infoboxcontent"></div></div>
     <div class="footer"><a href="/about">About</a></div>
   </body>
 </html>
