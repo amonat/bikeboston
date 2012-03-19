@@ -117,7 +117,7 @@
             position: latLng,
             map: null,
             title: s.name,
-            icon: 'http://www.google.com/mapfiles/arrow.png'
+            icon: '/mbta-pin.png'
           });
           markers.push(marker);
 
@@ -151,8 +151,8 @@
               var numEmpty = $station.children('nbemptydocks').text();
               var latLng = new google.maps.LatLng(lat, lng);
               var icon = (Number(numBikes) > 0) ?
-                  'http://maps.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png' :
-                  'http://maps.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
+                  '/bike.png' :
+                  '/bike-red.png';
 
               var marker = new google.maps.Marker({
                 position: latLng,
