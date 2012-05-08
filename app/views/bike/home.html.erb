@@ -1,2 +1,11 @@
-<h1>Bike#home</h1>
-<p>Find me in app/views/bike/home.html.erb</p>
+<script type="text/javascript">
+  var stops = [
+    <% for s in @stops %>
+    {name: '<%=s[:name]%>', lat: <%=s[:lat]%>, lon: <%=s[:lon]%>, line1: '<%=s[:line1]%>', stop1: '<%=s[:stop1]%>', line2: '<%=s[:line2]%>', stop2: '<%=s[:stop2]%>'},
+    <% end %>
+  ];
+</script>
+<div class="title">Boston Bike App <span class="tagline">Live Hubway & MBTA Subway Map</span></div>
+<div id="map_canvas"></div>
+<div id="infobox"><div id="infoboxcontent"></div></div>
+<div class="footer"><a href="/about">About</a></div>
