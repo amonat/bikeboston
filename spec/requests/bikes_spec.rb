@@ -11,7 +11,7 @@ describe "Bikes" do
 
   describe "About page" do
     before { visit '/about' }
-    it { should have_selector('h1', text: 'Bike#about') }
+    it { should have_selector('.title', text: 'Boston Bike App') }
   end
 
 end
