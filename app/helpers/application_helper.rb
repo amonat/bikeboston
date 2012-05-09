@@ -66,7 +66,6 @@ module ApplicationHelper
     stop2Index = header.index("stop2")
 
     stops = lines.collect do |s|
-      puts s
       s = s.chomp.split(',')
       if s
         { :name => s[nameIndex],
