@@ -13,4 +13,9 @@ class BikeController < ApplicationController
     @stations = xmlDoc('http://www.thehubway.com/data/stations/bikeStations.xml')
     render :xml => @stations
   end
+
+  def stopinfo
+    @trains = ['train']
+    render :json => @trains
+  end
 end
