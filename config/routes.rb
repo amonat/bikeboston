@@ -1,6 +1,7 @@
 Bikes::Application.routes.draw do
   root to: 'bike#home'
   match 'about' => 'bike#about', as: :about
+  match 'bikedata' => 'bike#bikedata', as: :bikedata
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

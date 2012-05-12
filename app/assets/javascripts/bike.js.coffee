@@ -95,9 +95,8 @@ $(->
 
   )
 
-  $.get('/bikedata-boston').done((data) ->
-    stations = $.parseXML(data)
-    $(stations).find('station').each((i, station) ->
+  $.get('/bikedata').done((data) ->
+    $(data).find('station').each((i, station) ->
         $station = $(station)
         name = $station.children('name').text()
         lat = $station.children('lat').text()

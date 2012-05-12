@@ -8,4 +8,9 @@ class BikeController < ApplicationController
 
   def about
   end
+
+  def bikedata
+    @stations = xmlDoc('http://www.thehubway.com/data/stations/bikeStations.xml')
+    render :xml => @stations
+  end
 end
