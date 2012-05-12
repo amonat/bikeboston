@@ -74,7 +74,7 @@ $(->
       position: latLng,
       map: null,
       title: s.name,
-      icon: '/mbta-pin.png'
+      icon: '/assets/mbta-pin.png'
     })
     markers.push(marker)
 
@@ -104,7 +104,7 @@ $(->
         numBikes = $station.children('nbbikes').text()
         numEmpty = $station.children('nbemptydocks').text()
         latLng = new google.maps.LatLng(lat, lng)
-        icon = if (Number(numBikes) > 0) then '/bike.png' else '/bike-red.png'
+        icon = if (Number(numBikes) > 0) then '/assets/bike.png' else '/assets/bike-red.png'
 
         marker = new google.maps.Marker({
           position: latLng,
