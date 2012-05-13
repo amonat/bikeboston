@@ -13,6 +13,7 @@ end
 
 group :test do
   gem 'capybara', '1.1.2'
+  gem "webmock", "~> 1.8.7"
 end
 
 group :production do
