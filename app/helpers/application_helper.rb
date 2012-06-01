@@ -52,40 +52,7 @@ module ApplicationHelper
     end
   end
 
-  def stopInfo
-    lines = File.open("#{Rails.root}/app/datafiles/stops.csv").readlines
-    header = lines[0].split(',')
-    lines.shift
-
-    nameIndex = header.index("name")
-    latIndex = header.index("lat")
-    lonIndex = header.index("lon")
-    line1Index = header.index("line1")
-    stop1Index = header.index("stop1")
-    line2Index = header.index("line2")
-    stop2Index = header.index("stop2")
-
-    stops = lines.collect do |s|
-      s = s.chomp.split(',')
-      if s
-        { :name => s[nameIndex],
-        :lat => s[latIndex],
-        :lon => s[lonIndex],
-        :line1 => s[line1Index],
-        :stop1 => s[stop1Index],
-        :line2 => s[line2Index],
-        :stop2 => s[stop2Index]
-        }
-      else
-        { :name => '',
-        :lat => '',
-        :lon => '',
-        :line1 => '',
-        :stop1 => '',
-        :line2 => '',
-        :stop2 => ''
-        }
-      end
-    end
+  def allSubwayStations
+    SubwayStation.includes(:subway_stops => [:subway_line]).all
   end
 end

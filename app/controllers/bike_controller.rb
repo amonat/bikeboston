@@ -3,7 +3,7 @@ class BikeController < ApplicationController
   include ApplicationHelper
 
   def home
-    @stops = stopInfo()
+    @stops = allSubwayStations()
   end
 
   def about

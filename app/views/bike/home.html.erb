@@ -1,7 +1,13 @@
 <script type="text/javascript">
   var stops = [
     <% for s in @stops %>
-    {name: '<%=s[:name]%>', lat: <%=s[:lat]%>, lon: <%=s[:lon]%>, line1: '<%=s[:line1]%>', stop1: '<%=s[:stop1]%>', line2: '<%=s[:line2]%>', stop2: '<%=s[:stop2]%>'},
+    {name: '<%=s.name%>',
+    lat: <%=s.lat%>,
+    lon: <%=s.lon%>,
+    line1: '<%=s.subway_stops.length >=1 ? s.subway_stops[0].subway_line.name.downcase : "" %>',
+    stop1: '<%=s.subway_stops.length >=1 ? s.subway_stops[0].code : "" %>',
+    line2: '<%=s.subway_stops.length >=2 ? s.subway_stops[1].subway_line.name.downcase : "" %>',
+    stop2: '<%=s.subway_stops.length >=2 ? s.subway_stops[1].code : "" %>'},
     <% end %>
   ];
 </script>
